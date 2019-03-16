@@ -89,8 +89,12 @@ button:focus {
 	float: left;
 }
 
-#sieve {
+#chicle2 {
 	float: right;
+}
+
+#sieve {
+	width: 100%;
 }
 
 .progress {
@@ -103,13 +107,14 @@ button:focus {
 
 .progress-bar {
 	height: 1rem;
-	background: #007bff;
+	background: #11aa51;
 	text-align: center;
 	color: #fff;
 	font-size: 0.7rem;
+	vertical-align: middle;
 }
 
-@media(min-width:321px) {
+@media(min-width:415px) {
 	body {
 		padding: 1rem;
 	}
