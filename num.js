@@ -32,6 +32,7 @@ function getNumb() {
 //Решатель
 function solver(metods) {
 	var num = getNumb();
+	window.clearAllTimeOut();
 	//если число задано, то считаем
 	if (num) {
 		document.getElementById("status").innerHTML = '0%';
@@ -135,4 +136,12 @@ function sieve(num) {
 		}
 	});
 	return result;
+}
+
+//Остановка всех setTimeout
+window.clearAllTimeOut = function () {
+	for (var i = setTimeout(function () {}, 0); i > 0; i--) {
+		window.clearInterval(i);
+		window.clearTimeout(i);
+	}
 }

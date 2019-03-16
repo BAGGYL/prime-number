@@ -1,7 +1,7 @@
 body {
 	padding: 0;
 	margin: 0;
-	background: #edeef0;
+	background: #fff;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
@@ -22,6 +22,10 @@ body {
 	text-align: left;
 	margin-bottom: .5rem;
 	margin-top: 0;
+}
+
+#numb{
+	text-align: justify;
 }
 
 input {
@@ -52,8 +56,14 @@ input:hover {
 	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
 }
 
+.button-group {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
 button {
-	width: 49%;
+	width: 100%;
 	box-sizing: border-box;
 	display: block;
 	color: #fff;
@@ -85,16 +95,9 @@ button:focus {
 	box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, .5);
 }
 
-#chicle {
-	float: left;
-}
-
+#chicle,
 #chicle2 {
-	float: right;
-}
-
-#sieve {
-	width: 100%;
+	width: 49%;
 }
 
 .progress {
@@ -117,6 +120,7 @@ button:focus {
 @media(min-width:415px) {
 	body {
 		padding: 1rem;
+		background: #edeef0;
 	}
 
 	.main {
