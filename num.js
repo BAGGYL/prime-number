@@ -55,7 +55,8 @@ function chicle(num) {
     //пробегаемся по всем числам
     for (i = 2; i <= num; i++) {
         //пробегаемся по массиву простых чисел
-        for (j = 0; j <= symfnum.length; j++) {
+        k = true;
+        for (j = 0; j < symfnum.length; j++) {
             //если поделилось нацело, это фиаско, выходим
             if (i % symfnum[j] == 0) {
                 k = false;
@@ -66,7 +67,6 @@ function chicle(num) {
         if (k) {
             symfnum.push(i);
         }
-        k = true;
     }
     return symfnum;
 }
