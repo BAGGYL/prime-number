@@ -110,11 +110,11 @@ button:focus {
 
 .progress-bar {
 	height: 1rem;
+	line-height: 1rem;
 	background: #11aa51;
 	text-align: center;
 	color: #fff;
 	font-size: 0.7rem;
-	vertical-align: middle;
 }
 
 @media(min-width:415px) {
