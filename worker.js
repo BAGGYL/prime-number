@@ -1,7 +1,9 @@
 let message = {},
 	primeNums = [],
-	i, num, timer,
-	col = 0;
+	i, num,
+	col = 0,
+	timer = performance.now(),
+	timeFrame = timer;
 
 onmessage = function (e) {
 	num = e.data.num;
@@ -22,7 +24,6 @@ onmessage = function (e) {
 
 //Метод расчета циклом
 function chicle() {
-	timer = performance.now();
 	//пробегаемся по всем числам
 	loop: for (i = 2; i <= num; i++) {
 		//пробегаемся по массиву простых чисел
@@ -41,7 +42,7 @@ function chicle() {
 //Метод расчета решетом
 function sieve() {
 	let sieve = [];
-	timer = performance.now();
+
 	sieve[1] = 0; // 1 - не простое число
 	// заполняем решето единицами
 	for (i = 2; i <= num; i++) {
@@ -55,6 +56,7 @@ function sieve() {
 				delete sieve[j];
 			}
 		}
+		pushStatus();
 	}
 	//пересортировка
 	sieve.forEach(function (element, index) {
@@ -66,15 +68,15 @@ function sieve() {
 
 //Функция отправки промежуточных вычислений
 function pushStatus() {
-	if ((i / num * 100 - col * 0.1) >= 0.1) {
+	if (performance.now() - timeFrame >= 1000 / 20) {
 		message = {
 			percent: (i / num * 100).toFixed(1) + "%",
 			primeNums: "Ожидание....",
 			length: primeNums.length,
-			timer: performance.now() - timer
+			timer: (performance.now() - timer)
 		};
 		postMessage(message);
-		col++;
+		timeFrame = performance.now()
 	}
 }
 
@@ -84,7 +86,7 @@ function pushFihish() {
 		percent: "100%",
 		primeNums: primeNums.join(', '),
 		length: primeNums.length,
-		timer: performance.now() - timer
+		timer: (performance.now() - timer)
 	};
 	postMessage(message);
 }
