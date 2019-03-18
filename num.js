@@ -7,9 +7,17 @@ window.onload = function () {
 	document.getElementById("sieve").onclick = function () {
 		solver(sieve);
 	};
-	//событие на клик chicle
-	document.getElementById("chicle2").onclick = function () {
-		solver(chicle2);
+	//событие на клик chicleAnimation
+	document.getElementById("chicleAnimation").onclick = function () {
+		solver(chicleAnimation);
+	};
+	//событие на клик chicleWorker
+	document.getElementById("chicleWorker").onclick = function () {
+		solverWoker('chicle');
+	};
+	//событие на клик sieveWorker
+	document.getElementById("sieveWorker").onclick = function () {
+		solverWoker('sieve');
 	};
 };
 
@@ -30,7 +38,7 @@ function getNumb() {
 }
 
 //Решатель
-function solver(metods) {
+function solver(method) {
 	var num = getNumb();
 	window.clearAllTimeOut();
 	//если число задано, то считаем
@@ -39,7 +47,7 @@ function solver(metods) {
 		document.getElementById("status").style.width = '0%';
 		setTimeout(function () {
 			var timer = performance.now();
-			var result = metods(num);
+			var result = method(num);
 			timer = performance.now() - timer;
 			document.getElementById("status").innerHTML = '100%';
 			document.getElementById("status").style.width = '100%';
@@ -50,9 +58,32 @@ function solver(metods) {
 	}
 }
 
+//Решатель через воркер
+function solverWoker(method) {
+	var num = getNumb();
+	window.clearAllTimeOut();
+	//если число задано, то считаем
+	if (num) {
+		const myWorker = new Worker("worker.js");
+		document.getElementById("status").innerHTML = '0%';
+		document.getElementById("status").style.width = '0%';
+		myWorker.postMessage({
+			method: method,
+			num: num
+		});
+		myWorker.onmessage = function (e) {
+			document.getElementById("status").innerHTML = e.data.percent;
+			document.getElementById("status").style.width = e.data.percent;
+			document.getElementById("time").innerHTML = e.data.timer;
+			document.getElementById("total").innerHTML = e.data.length;
+			document.getElementById("numb").innerHTML = e.data.primeNums;
+		}
+	}
+}
+
 //способ перебором
 function chicle(num) {
-	var symfnum = [],
+	let symfnum = [],
 		i, j;
 	//пробегаемся по всем числам
 	loop:
@@ -69,9 +100,9 @@ function chicle(num) {
 	return symfnum;
 }
 
-//способ перебором
-function chicle2(num) {
-	var symfnum = [],
+//способ перебором c анимацией
+function chicleAnimation(num) {
+	let symfnum = [],
 		i = 2,
 		j, k,
 		timer = performance.now(),
@@ -81,7 +112,7 @@ function chicle2(num) {
 		numb = document.getElementById("numb"),
 		percent;
 	//пробегаемся по всем числам с анимацией
-	var forTime = setInterval(frame, 0);
+	let forTime = setInterval(frame, 0);
 
 	function frame() {
 		if (i <= num) {
@@ -113,24 +144,25 @@ function chicle2(num) {
 
 //способ решето Эратосфена
 function sieve(num) {
-	var S = [],
+	var sieve = [],
 		result = [];
-	S[1] = 0; // 1 - не простое число
+
+	sieve[1] = 0; // 1 - не простое число
 	// заполняем решето единицами
-	for (k = 2; k <= num; k++) {
-		S[k] = 1;
+	for (var i = 2; i <= num; i++) {
+		sieve[i] = 1;
 	}
-	for (k = 2; k * k <= num; k++) {
-		// если k - простое (не вычеркнуто)
-		if (S[k] == 1) {
-			// то вычеркнем кратные k
-			for (l = k * k; l <= num; l += k) {
-				S[l] = 0;
+	for (i = 2; i * i <= num; i++) {
+		// если i - простое (не вычеркнуто)
+		if (sieve[i] == 1) {
+			// то вычеркнем кратные i
+			for (let j = i * i; j <= num; j += i) {
+				delete sieve[j];
 			}
 		}
 	}
 	//пересортировка
-	S.forEach(function (element, index) {
+	sieve.forEach(function (element, index) {
 		if (element) {
 			result.push(index);
 		}

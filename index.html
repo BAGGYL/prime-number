@@ -12,12 +12,14 @@
 <body>
 	<div class="main">
 		<p>Введите максимальное число для поиска простых чисел</p>
-		<input type="number" id="number" placeholder="1024">
+		<input type="number" id="number" placeholder="1024" value="1000000">
 		<p>Выберите метод:</p>
 		<div class="button-group">
 			<button id="chicle">Перебор</button>
-			<button id="chicle2">Перебор c анимацией</button>
+			<button id="chicleAnimation">Перебор c анимацией</button>
 			<button id="sieve">Решето Эратосфена</button>
+			<button id="chicleWorker">Перебор в отдельном потоке</button>
+			<button id="sieveWorker">Решето в отдельном потоке</button>
 		</div>
 		<div class="progress">
 			<div class="progress-bar" style="width:0%" id="status"></div>

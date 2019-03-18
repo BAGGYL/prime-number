@@ -24,7 +24,7 @@ body {
 	margin-top: 0;
 }
 
-#numb{
+#numb {
 	text-align: justify;
 }
 
@@ -96,7 +96,9 @@ button:focus {
 }
 
 #chicle,
-#chicle2 {
+#chicleAnimation,
+#chicleWorker,
+#sieveWorker {
 	width: 49%;
 }
 
