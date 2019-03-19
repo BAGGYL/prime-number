@@ -83,21 +83,25 @@ function solverWoker(method) {
 
 //способ перебором
 function chicle(num) {
-	let symfnum = [],
-		i, j;
+	let primeNums = [2]; // 2 - единственное четное простое число
 	//пробегаемся по всем числам
 	loop:
-		for (i = 2; i <= num; i++) {
+		for (let i = 3; i <= num; i += 2) {
+			if (i > 10 && i % 10 === 5) {
+				continue loop;
+			}
 			//пробегаемся по массиву простых чисел
-			for (j = 0; j < symfnum.length; j++) {
+			for (let j = 0; j < primeNums.length; j++) {
 				//если поделилось нацело, это фиаско, выходим
-				if (i % symfnum[j] == 0) {
+				if (i % primeNums[j] === 0) {
+					continue loop;
+				} else if (primeNums[j] > Math.sqrt(i)) {
+					primeNums.push(i);
 					continue loop;
 				}
 			}
-			symfnum.push(i);
 		}
-	return symfnum;
+	return primeNums;
 }
 
 //способ перебором c анимацией
@@ -144,30 +148,25 @@ function chicleAnimation(num) {
 
 //способ решето Эратосфена
 function sieve(num) {
-	var sieve = [],
-		result = [];
+	let sieve = Array(num),
+		primeNums = [];
 
-	sieve[1] = 0; // 1 - не простое число
+	primeNums.push(2); // 2 - единственное четное простое число
 	// заполняем решето единицами
-	for (var i = 2; i <= num; i++) {
+	for (i = 3; i <= num; i += 2) {
 		sieve[i] = 1;
 	}
-	for (i = 2; i * i <= num; i++) {
+	for (let i = 3; i <= num; i += 2) {
 		// если i - простое (не вычеркнуто)
-		if (sieve[i] == 1) {
-			// то вычеркнем кратные i
-			for (let j = i * i; j <= num; j += i) {
-				delete sieve[j];
+		if (sieve[i] === 1) {
+			primeNums.push(i);
+			// то вычеркнем кратные 2*i
+			for (let j = i * i; j <= num; j += 2 * i) {
+				sieve[j] = 0;
 			}
 		}
 	}
-	//пересортировка
-	sieve.forEach(function (element, index) {
-		if (element) {
-			result.push(index);
-		}
-	});
-	return result;
+	return primeNums;
 }
 
 //Остановка всех setTimeout
